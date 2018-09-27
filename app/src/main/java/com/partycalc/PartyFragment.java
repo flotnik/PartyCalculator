@@ -11,7 +11,6 @@ import android.view.View;
 import android.view.ViewGroup;
 
 import com.partycalc.database.Party;
-import com.partycalc.logic.AllParties;
 
 /**
  * A fragment representing a list of Items.
@@ -67,7 +66,7 @@ public class PartyFragment extends Fragment {
             } else {
                 recyclerView.setLayoutManager(new GridLayoutManager(context, mColumnCount));
             }
-            recyclerView.setAdapter(new PartyRecyclerViewAdapter(AllParties.ITEMS, mListener));
+            recyclerView.setAdapter(new PartyRecyclerViewAdapter(Singleton.ITEMS, mListener));
         }
         return view;
     }

@@ -1,15 +1,12 @@
-package com.partycalc.logic;
+package com.partycalc;
 
 
-import com.partycalc.database.PartiesDatabase;
 import com.partycalc.database.Party;
 
 import java.util.ArrayList;
 import java.util.List;
 
-public class AllParties {
-
-    public static PartiesDatabase db;
+public class Singleton {
 
     public static final List<Party> ITEMS = new ArrayList<>();
 

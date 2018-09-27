@@ -1,24 +1,18 @@
 package com.partycalc.database;
 
-import android.arch.persistence.room.ColumnInfo;
 import android.arch.persistence.room.Entity;
 import android.arch.persistence.room.PrimaryKey;
 
 @Entity
 class Participant {
 
-    @PrimaryKey(autoGenerate = true)
-    int id;
-    @ColumnInfo
+    @PrimaryKey(autoGenerate = true) int id;
     String name;
-    @ColumnInfo
     int size;
-    //List<Contribution> contributionList;
 
     public Participant(String name, int size) {
         this.name = name;
         this.size = size;
-        //contributionList = new ArrayList<>();
     }
 
     public int getId() {
@@ -45,7 +39,4 @@ class Participant {
         this.size = size;
     }
 
-    /*    public void addContribution(Contribution cont){
-        contributionList.add(cont);
-    }*/
 }

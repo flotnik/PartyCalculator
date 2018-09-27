@@ -1,17 +1,13 @@
 package com.partycalc.database;
 
-import android.arch.persistence.room.ColumnInfo;
 import android.arch.persistence.room.Entity;
 import android.arch.persistence.room.PrimaryKey;
 
 @Entity
 class Contribution {
 
-    @PrimaryKey(autoGenerate = true)
-    int id;
-    @ColumnInfo
+    @PrimaryKey(autoGenerate = true) int id;
     String comment;
-    @ColumnInfo()
     Float price;
 
     public Contribution(String comment, Float price) {
