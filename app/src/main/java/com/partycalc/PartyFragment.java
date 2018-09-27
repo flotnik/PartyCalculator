@@ -12,6 +12,8 @@ import android.view.ViewGroup;
 
 import com.partycalc.dummy.DummyContent;
 import com.partycalc.dummy.DummyContent.DummyItem;
+import com.partycalc.logic.AllParties;
+import com.partycalc.logic.Party;
 
 import java.util.List;
 
@@ -69,7 +71,7 @@ public class PartyFragment extends Fragment {
             } else {
                 recyclerView.setLayoutManager(new GridLayoutManager(context, mColumnCount));
             }
-            recyclerView.setAdapter(new PartyRecyclerViewAdapter(DummyContent.ITEMS, mListener));
+            recyclerView.setAdapter(new PartyRecyclerViewAdapter(AllParties.ITEMS, mListener));
         }
         return view;
     }
@@ -104,6 +106,6 @@ public class PartyFragment extends Fragment {
      */
     public interface OnListFragmentInteractionListener {
         // TODO: Update argument type and name
-        void onListFragmentInteraction(DummyItem item);
+        void onListFragmentInteraction(Party item);
     }
 }
