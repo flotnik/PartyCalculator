@@ -6,24 +6,21 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.TextView;
 
-import com.partycalc.PartyFragment.OnListFragmentInteractionListener;
 import com.partycalc.database.Party;
 
 import java.util.List;
 
 /**
  * {@link RecyclerView.Adapter} that can display a {@link Party} and makes a call to the
- * specified {@link OnListFragmentInteractionListener}.
+ * specified {@link }.
  * TODO: Replace the implementation with code for your data type.
  */
 public class PartyRecyclerViewAdapter extends RecyclerView.Adapter<PartyRecyclerViewAdapter.ViewHolder> {
 
     private final List<Party> mValues;
-    private final OnListFragmentInteractionListener mListener;
 
-    public PartyRecyclerViewAdapter(List<Party> items, OnListFragmentInteractionListener listener) {
+    public PartyRecyclerViewAdapter(List<Party> items) {
         mValues = items;
-        mListener = listener;
     }
 
     @Override
@@ -38,7 +35,7 @@ public class PartyRecyclerViewAdapter extends RecyclerView.Adapter<PartyRecycler
         holder.mIdView.setText(mValues.get(position).getName());
         holder.mContentView.setText(mValues.get(position).getName());
 
-        holder.mView.setOnClickListener(new View.OnClickListener() {
+       /* holder.mView.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
                 if (null != mListener) {
@@ -47,12 +44,24 @@ public class PartyRecyclerViewAdapter extends RecyclerView.Adapter<PartyRecycler
                     mListener.onListFragmentInteraction(holder.mItem);
                 }
             }
-        });
+        });*/
     }
 
     @Override
     public int getItemCount() {
         return mValues.size();
+    }
+
+    public void addNewItem(Party item){
+        mValues.add(item);
+        notifyDataSetChanged();
+    }
+
+    public void updateList(List<Party> items){
+        if(items != null){
+            mValues.addAll(items);
+            notifyDataSetChanged();
+        }
     }
 
     public class ViewHolder extends RecyclerView.ViewHolder {

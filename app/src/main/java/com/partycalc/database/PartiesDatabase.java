@@ -19,7 +19,7 @@ public abstract class PartiesDatabase extends RoomDatabase {
     private static final String DB_NAME = "partyCalcDatabase.db";
     private static volatile PartiesDatabase instance;
 
-    static synchronized PartiesDatabase getInstance(Context context) {
+    public static synchronized PartiesDatabase getInstance(Context context) {
         if (instance == null) {
             instance = create(context);
         }
@@ -27,7 +27,12 @@ public abstract class PartiesDatabase extends RoomDatabase {
     }
 
     private static PartiesDatabase create(final Context context) {
-        return Room.databaseBuilder(context, PartiesDatabase.class, DB_NAME).build();
+        return Room.databaseBuilder(context, PartiesDatabase.class, DB_NAME)
+                .allowMainThreadQueries().build();
+    }
+
+    public static void destroyInstance() {
+        instance = null;
     }
 
 }

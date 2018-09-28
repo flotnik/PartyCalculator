@@ -9,11 +9,11 @@ import android.arch.persistence.room.Update;
 public interface ContributionDAO {
 
     @Insert
-    void insert(Contribution... user);
+    void insert(Contribution... item);
 
     @Update
-    void update(Contribution... user);
+    void update(Contribution... item);
 
     @Delete
-    void delete(Contribution... user);
+    void delete(Contribution... item);
 }
