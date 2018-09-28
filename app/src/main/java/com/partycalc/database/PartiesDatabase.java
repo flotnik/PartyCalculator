@@ -28,7 +28,8 @@ public abstract class PartiesDatabase extends RoomDatabase {
 
     private static PartiesDatabase create(final Context context) {
         return Room.databaseBuilder(context, PartiesDatabase.class, DB_NAME)
-                .allowMainThreadQueries().build();
+                //.allowMainThreadQueries()
+                .build();
     }
 
     public static void destroyInstance() {

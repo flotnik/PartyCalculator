@@ -17,10 +17,14 @@ import java.util.List;
  */
 public class PartyRecyclerViewAdapter extends RecyclerView.Adapter<PartyRecyclerViewAdapter.ViewHolder> {
 
-    private final List<Party> mValues;
+    private List<Party> mValues;
+    private View.OnClickListener onClickListener;
+    private View.OnLongClickListener longClickListener;
 
-    public PartyRecyclerViewAdapter(List<Party> items) {
-        mValues = items;
+    public PartyRecyclerViewAdapter(List<Party> items, View.OnClickListener onClickListener, View.OnLongClickListener longClickListener) {
+        this.mValues = items;
+        this.onClickListener = onClickListener;
+        this.longClickListener = longClickListener;
     }
 
     @Override
@@ -31,9 +35,12 @@ public class PartyRecyclerViewAdapter extends RecyclerView.Adapter<PartyRecycler
 
     @Override
     public void onBindViewHolder(final ViewHolder holder, int position) {
+        Party borrowModel = mValues.get(position);
         holder.mItem = mValues.get(position);
         holder.mIdView.setText(mValues.get(position).getName());
         holder.mContentView.setText(mValues.get(position).getName());
+        holder.itemView.setTag(borrowModel);
+        holder.itemView.setOnClickListener(onClickListener);
 
        /* holder.mView.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -52,16 +59,9 @@ public class PartyRecyclerViewAdapter extends RecyclerView.Adapter<PartyRecycler
         return mValues.size();
     }
 
-    public void addNewItem(Party item){
-        mValues.add(item);
+    public void addItems(List<Party> items){
+        this.mValues = items;
         notifyDataSetChanged();
-    }
-
-    public void updateList(List<Party> items){
-        if(items != null){
-            mValues.addAll(items);
-            notifyDataSetChanged();
-        }
     }
 
     public class ViewHolder extends RecyclerView.ViewHolder {
