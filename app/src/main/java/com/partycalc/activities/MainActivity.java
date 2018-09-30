@@ -1,7 +1,9 @@
 package com.partycalc.activities;
 
+import android.app.AlertDialog;
 import android.arch.lifecycle.Observer;
 import android.arch.lifecycle.ViewModelProviders;
+import android.content.DialogInterface;
 import android.content.Intent;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
@@ -18,7 +20,6 @@ import java.util.ArrayList;
 import java.util.List;
 
 public class MainActivity extends AppCompatActivity implements View.OnLongClickListener, View.OnClickListener  {
-    public static final String EXTRA_MESSAGE = "com.example.myfirstapp.MESSAGE";
 
     private PartyViewModel mModel;
     private RecyclerView mRecyclerView;
@@ -43,23 +44,32 @@ public class MainActivity extends AppCompatActivity implements View.OnLongClickL
         });
     }
 
-    public void toastMe(View view){
+    public void addPartyButtonClick(View view){
         Intent intent = new Intent(this, AddPartyActivity.class);
         startActivity(intent);
-        /*Toast myToast = Toast.makeText(this, "Hello Toast!", Toast.LENGTH_SHORT);
-        myToast.show();*/
     }
 
     public void onListFragmentInteraction(Party item) {
         Intent intent = new Intent(this, ParticipantActivity.class);
-        intent.putExtra(EXTRA_MESSAGE, item.getName());
         startActivity(intent);
     }
 
     @Override
-    public boolean onLongClick(View view) {
-        Party borrowModel = (Party) view.getTag();
-        mModel.deleteItem(borrowModel);
+    public boolean onLongClick(final View view) {
+        AlertDialog.Builder builder = new AlertDialog.Builder(this);
+        builder.setMessage("Delete this party?");
+        builder.setPositiveButton(R.string.ok, new DialogInterface.OnClickListener() {
+            public void onClick(DialogInterface dialog, int id) {
+                Party borrowModel = (Party) view.getTag();
+                mModel.deleteParty(borrowModel);
+            }
+        });
+        builder.setNegativeButton(R.string.cancel, new DialogInterface.OnClickListener() {
+            public void onClick(DialogInterface dialog, int id) {
+                dialog.cancel();
+            }
+        });
+        builder.create().show();
         return false;
     }
 

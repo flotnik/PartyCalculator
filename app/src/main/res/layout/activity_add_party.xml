@@ -8,24 +8,43 @@
 
     <EditText
         android:id="@+id/partyName"
-        android:layout_width="wrap_content"
+        android:layout_width="308dp"
         android:layout_height="42dp"
-        android:layout_marginStart="85dp"
-        android:layout_marginTop="49dp"
+        android:layout_marginStart="16dp"
+        android:layout_marginTop="24dp"
+        android:layout_marginEnd="16dp"
         android:ems="10"
+        android:hint="Party title"
         android:inputType="textPersonName"
-        android:text="Party title"
+        app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent" />
+
+    <EditText
+        android:id="@+id/partyDate"
+        android:layout_width="307dp"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="16dp"
+        android:layout_marginTop="12dp"
+        android:layout_marginEnd="16dp"
+        android:editable="false"
+        android:ems="10"
+        android:hint="Party date"
+        android:inputType="date"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/partyName" />
 
     <Button
         android:id="@+id/submit"
         android:layout_width="88dp"
         android:layout_height="wrap_content"
-        android:layout_marginStart="148dp"
-        android:layout_marginTop="53dp"
+        android:layout_marginStart="8dp"
+        android:layout_marginTop="40dp"
+        android:layout_marginEnd="8dp"
         android:text="Add"
+        app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/partyName" />
+        app:layout_constraintTop_toBottomOf="@+id/partyDate" />
 
 </android.support.constraint.ConstraintLayout>

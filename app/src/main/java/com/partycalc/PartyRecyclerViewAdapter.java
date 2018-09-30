@@ -8,6 +8,7 @@ import android.widget.TextView;
 
 import com.partycalc.database.Party;
 
+import java.text.SimpleDateFormat;
 import java.util.List;
 
 /**
@@ -37,10 +38,11 @@ public class PartyRecyclerViewAdapter extends RecyclerView.Adapter<PartyRecycler
     public void onBindViewHolder(final ViewHolder holder, int position) {
         Party borrowModel = mValues.get(position);
         holder.mItem = mValues.get(position);
-        holder.mIdView.setText(mValues.get(position).getName());
-        holder.mContentView.setText(mValues.get(position).getName());
+        holder.nameView.setText(mValues.get(position).getName());
+        holder.dateView.setText(new SimpleDateFormat("yyyy.MM.dd").format(mValues.get(position).getDate()));
         holder.itemView.setTag(borrowModel);
         holder.itemView.setOnClickListener(onClickListener);
+        holder.itemView.setOnLongClickListener(longClickListener);
 
        /* holder.mView.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -66,20 +68,20 @@ public class PartyRecyclerViewAdapter extends RecyclerView.Adapter<PartyRecycler
 
     public class ViewHolder extends RecyclerView.ViewHolder {
         public final View mView;
-        public final TextView mIdView;
-        public final TextView mContentView;
+        public final TextView dateView;
+        public final TextView nameView;
         public Party mItem;
 
         public ViewHolder(View view) {
             super(view);
             mView = view;
-            mIdView = view.findViewById(R.id.item_number);
-            mContentView = view.findViewById(R.id.content);
+            dateView = view.findViewById(R.id.party_date);
+            nameView = view.findViewById(R.id.party_name);
         }
 
         @Override
         public String toString() {
-            return super.toString() + " '" + mContentView.getText() + "'";
+            return super.toString() + " '" + nameView.getText() + "'";
         }
     }
 }

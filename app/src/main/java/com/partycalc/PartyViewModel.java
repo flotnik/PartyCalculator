@@ -27,14 +27,13 @@ public class PartyViewModel extends AndroidViewModel {
         return partiesList;
     }
 
-    public void deleteItem(Party borrowModel) {
+    public void deleteParty(Party borrowModel) {
         new deleteAsyncTask(appDatabase).execute(borrowModel);
     }
 
     public void addParty(Party party) {
         new addAsyncTask(appDatabase).execute(party);
     }
-
 
 
     private static class deleteAsyncTask extends AsyncTask<Party, Void, Void> {

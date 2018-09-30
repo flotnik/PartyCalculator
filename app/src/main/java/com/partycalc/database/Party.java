@@ -2,6 +2,9 @@ package com.partycalc.database;
 
 import android.arch.persistence.room.Entity;
 import android.arch.persistence.room.PrimaryKey;
+import android.arch.persistence.room.TypeConverters;
+
+import java.util.Date;
 
 @Entity
 public class Party {
@@ -9,9 +12,12 @@ public class Party {
     @PrimaryKey(autoGenerate = true)
     int id;
     String name;
+    @TypeConverters(DateConverter.class)
+    Date date;
 
-    public Party(String name) {
+    public Party(String name, Date date) {
         this.name = name;
+        this.date = date;
     }
 
     public int getId() {
@@ -30,4 +36,11 @@ public class Party {
         return name;
     }
 
+    public Date getDate() {
+        return date;
+    }
+
+    public void setDate(Date date) {
+        this.date = date;
+    }
 }
