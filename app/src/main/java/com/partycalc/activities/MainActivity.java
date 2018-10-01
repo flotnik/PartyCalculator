@@ -12,14 +12,16 @@ import android.support.v7.widget.RecyclerView;
 import android.view.View;
 
 import com.partycalc.PartyRecyclerViewAdapter;
-import com.partycalc.PartyViewModel;
 import com.partycalc.R;
 import com.partycalc.database.Party;
+import com.partycalc.viewmodels.PartyViewModel;
 
 import java.util.ArrayList;
 import java.util.List;
 
-public class MainActivity extends AppCompatActivity implements View.OnLongClickListener, View.OnClickListener  {
+public class MainActivity extends AppCompatActivity implements View.OnLongClickListener, View.OnClickListener {
+
+    private static final String TAG = "MainActivity";
 
     private PartyViewModel mModel;
     private RecyclerView mRecyclerView;
@@ -49,8 +51,11 @@ public class MainActivity extends AppCompatActivity implements View.OnLongClickL
         startActivity(intent);
     }
 
-    public void onListFragmentInteraction(Party item) {
-        Intent intent = new Intent(this, ParticipantActivity.class);
+    @Override
+    public void onClick(View view){
+        Party item = (Party) view.getTag();
+        Intent intent = new Intent(this, ActivePartyActivity.class);
+        intent.putExtra("party_id", item.getId());
         startActivity(intent);
     }
 
@@ -71,10 +76,5 @@ public class MainActivity extends AppCompatActivity implements View.OnLongClickL
         });
         builder.create().show();
         return false;
-    }
-
-    @Override
-    public void onClick(View view) {
-
     }
 }

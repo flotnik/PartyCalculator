@@ -12,15 +12,13 @@
         <activity android:name=".activities.MainActivity">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
-
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
         </activity>
 
-        <activity android:name=".activities.ParticipantActivity">
+        <activity android:name=".activities.ActivePartyActivity">
             <intent-filter>
                 <action android:name="com.partycalc.ParticipantActivity" />
-
                 <category android:name="android.intent.category.DEFAULT" />
             </intent-filter>
 
@@ -34,9 +32,21 @@
                 <action android:name="com.partycalc.AddPartyActivity" />
                 <category android:name="android.intent.category.DEFAULT" />
             </intent-filter>
+
             <meta-data
                 android:name="android.support.PARENT_ACTIVITY"
                 android:value=".activities.MainActivity" />
+        </activity>
+
+        <activity android:name=".activities.AddParticipantToPartyActivity">
+            <intent-filter>
+                <action android:name="com.partycalc.AddParticipantToPartyActivity" />
+                <category android:name="android.intent.category.DEFAULT" />
+            </intent-filter>
+
+            <meta-data
+                android:name="android.support.PARENT_ACTIVITY"
+                android:value=".activities.ActivePartyActivity" />
         </activity>
     </application>
 

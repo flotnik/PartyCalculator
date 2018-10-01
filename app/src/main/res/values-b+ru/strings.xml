@@ -1,9 +1,11 @@
 <resources>
-    <string name="app_name">Калькулятор для вечеринки</string>
+    <string name="app_name">Калькулятор вечеринки</string>
     <string name="ok">Да</string>
     <string name="cancel">Отмена</string>
-    <string name="confirm_add_party_btn">Добавить</string>
+    <string name="confirm_addition_btn">Добавить</string>
     <string name="party_date_hint">Дата вечеринки</string>
     <string name="party_title">Название вечеринки</string>
     <string name="delete_party_message">Удалить вечеринку?</string>
+    <string name="party_name_is_incorrect">Некорректное название для вечеринки</string>
+    <string name="party_date_is_incorrect">Некорректная дата вечеринки</string>
 </resources>

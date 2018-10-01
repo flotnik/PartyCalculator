@@ -2,8 +2,10 @@
     <string name="app_name">Party Calculator</string>
     <string name="ok">Yes</string>
     <string name="cancel">Cancel</string>
-    <string name="confirm_add_party_btn">Add</string>
+    <string name="confirm_addition_btn">Add</string>
     <string name="party_date_hint">Party date</string>
     <string name="party_title">Party title</string>
     <string name="delete_party_message">Delete this party?</string>
+    <string name="party_name_is_incorrect">Incorrect party name</string>
+    <string name="party_date_is_incorrect">Incorrect party date</string>
 </resources>

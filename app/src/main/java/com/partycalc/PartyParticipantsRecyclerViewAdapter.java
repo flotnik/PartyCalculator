@@ -6,9 +6,9 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.TextView;
 
+import com.partycalc.database.Participant;
 import com.partycalc.database.Party;
 
-import java.text.SimpleDateFormat;
 import java.util.List;
 
 /**
@@ -16,13 +16,13 @@ import java.util.List;
  * specified {@link }.
  * TODO: Replace the implementation with code for your data type.
  */
-public class PartyRecyclerViewAdapter extends RecyclerView.Adapter<PartyRecyclerViewAdapter.ViewHolder> {
+public class PartyParticipantsRecyclerViewAdapter extends RecyclerView.Adapter<PartyParticipantsRecyclerViewAdapter.ViewHolder> {
 
-    private List<Party> mValues;
+    private List<Participant> mValues;
     private View.OnClickListener onClickListener;
     private View.OnLongClickListener longClickListener;
 
-    public PartyRecyclerViewAdapter(List<Party> items, View.OnClickListener onClickListener, View.OnLongClickListener longClickListener) {
+    public PartyParticipantsRecyclerViewAdapter(List<Participant> items, View.OnClickListener onClickListener, View.OnLongClickListener longClickListener) {
         this.mValues = items;
         this.onClickListener = onClickListener;
         this.longClickListener = longClickListener;
@@ -30,26 +30,26 @@ public class PartyRecyclerViewAdapter extends RecyclerView.Adapter<PartyRecycler
 
     @Override
     public ViewHolder onCreateViewHolder(ViewGroup parent, int viewType) {
-        View view = LayoutInflater.from(parent.getContext()).inflate(R.layout.fragment_party, parent, false);
+        View view = LayoutInflater.from(parent.getContext()).inflate(R.layout.fragment_party_participants, parent, false);
         return new ViewHolder(view);
     }
 
     @Override
     public void onBindViewHolder(final ViewHolder holder, int position) {
-        Party borrowModel = mValues.get(position);
+        Participant borrowModel = mValues.get(position);
         holder.mItem = mValues.get(position);
         holder.nameView.setText(mValues.get(position).getName());
-        holder.dateView.setText(new SimpleDateFormat("yyyy.MM.dd").format(mValues.get(position).getDate()));
         holder.itemView.setTag(borrowModel);
         holder.itemView.setOnClickListener(onClickListener);
         holder.itemView.setOnLongClickListener(longClickListener);
 
-/*        holder.mView.setOnClickListener(new View.OnClickListener() {
+       /* holder.mView.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                if (null != onClickListener) {
-                    // Notify the active callbacks interface (the activity, if the fragment is attached to one) that an item has been selected.
-                    onClickListener.onListFragmentInteraction(holder.mItem);
+                if (null != mListener) {
+                    // Notify the active callbacks interface (the activity, if the
+                    // fragment is attached to one) that an item has been selected.
+                    mListener.onListFragmentInteraction(holder.mItem);
                 }
             }
         });*/
@@ -60,21 +60,19 @@ public class PartyRecyclerViewAdapter extends RecyclerView.Adapter<PartyRecycler
         return mValues.size();
     }
 
-    public void addItems(List<Party> items){
+    public void addItems(List<Participant> items){
         this.mValues = items;
         notifyDataSetChanged();
     }
 
     public class ViewHolder extends RecyclerView.ViewHolder {
         public final View mView;
-        public final TextView dateView;
         public final TextView nameView;
-        public Party mItem;
+        public Participant mItem;
 
         public ViewHolder(View view) {
             super(view);
             mView = view;
-            dateView = view.findViewById(R.id.party_date);
             nameView = view.findViewById(R.id.party_name);
         }
 

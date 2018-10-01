@@ -1,41 +1,28 @@
 package com.partycalc.database;
 
-import android.arch.persistence.room.Entity;
-import android.arch.persistence.room.PrimaryKey;
+public class Contribution {
 
-@Entity
-class Contribution {
+    String contrib_comment;
+    Float contrib_amount;
 
-    @PrimaryKey(autoGenerate = true) int id;
-    String comment;
-    Float price;
-
-    public Contribution(String comment, Float price) {
-        this.comment = comment;
-        this.price = price;
+    public Contribution(String contrib_comment, Float contrib_amount) {
+        this.contrib_comment = contrib_comment;
+        this.contrib_amount = contrib_amount;
     }
 
-    public int getId() {
-        return id;
+    public String getContrib_comment() {
+        return contrib_comment;
     }
 
-    public void setId(int id) {
-        this.id = id;
+    public void setContrib_comment(String contrib_comment) {
+        this.contrib_comment = contrib_comment;
     }
 
-    public String getComment() {
-        return comment;
+    public Float getContrib_amount() {
+        return contrib_amount;
     }
 
-    public void setComment(String comment) {
-        this.comment = comment;
-    }
-
-    public Float getPrice() {
-        return price;
-    }
-
-    public void setPrice(Float price) {
-        this.price = price;
+    public void setContrib_amount(Float contrib_amount) {
+        this.contrib_amount = contrib_amount;
     }
 }

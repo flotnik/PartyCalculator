@@ -10,15 +10,17 @@ import android.widget.DatePicker;
 import android.widget.EditText;
 import android.widget.Toast;
 
-import com.partycalc.PartyViewModel;
 import com.partycalc.R;
 import com.partycalc.database.Party;
+import com.partycalc.viewmodels.PartyViewModel;
 
 import java.text.SimpleDateFormat;
 import java.util.Calendar;
 import java.util.Date;
 
 public class AddPartyActivity extends AppCompatActivity implements DatePickerDialog.OnDateSetListener  {
+
+    private static final String TAG = "AddPartyActivity";
 
     private DatePickerDialog datePickerDialog;
     private Date date;
@@ -47,9 +49,11 @@ public class AddPartyActivity extends AppCompatActivity implements DatePickerDia
         submit.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                if (partyName.getText() == null || date == null)
-                    Toast.makeText(AddPartyActivity.this, "Empty filed", Toast.LENGTH_SHORT).show();
-                else {
+                if (partyName.getText() == null){
+                    Toast.makeText(AddPartyActivity.this, R.string.party_name_is_incorrect, Toast.LENGTH_SHORT).show();
+                }else if(date == null){
+                    Toast.makeText(AddPartyActivity.this, R.string.party_date_is_incorrect, Toast.LENGTH_SHORT).show();
+                }else {
                     partyViewModel.addParty(new Party(partyName.getText().toString(),date));
                     finish();
                 }

@@ -1,15 +1,13 @@
 package com.partycalc.database;
 
-import android.arch.persistence.db.SupportSQLiteDatabase;
 import android.arch.persistence.room.Database;
 import android.arch.persistence.room.Room;
 import android.arch.persistence.room.RoomDatabase;
-import android.arch.persistence.room.migration.Migration;
 import android.content.Context;
 
 
-@Database(entities = {Party.class, Participant.class, Contribution.class, AllParties.class},
-          version = 2,
+@Database(entities = {Party.class, Participant.class, ActiveParties.class},
+          version = 1,
           exportSchema = false)
 public abstract class PartiesDatabase extends RoomDatabase {
 
@@ -18,12 +16,8 @@ public abstract class PartiesDatabase extends RoomDatabase {
     }
 
     public abstract PartyDAO partyDAO();
-
     public abstract ParticipantDAO participantDAO();
-
-    public abstract ContributionDAO contributionDAO();
-
-    public abstract AllPartiesDAO allPartiesDAO();
+    public abstract ActivePartiesDAO allPartiesDAO();
 
     private static final String DB_NAME = "partyCalcDatabase.db";
     private static volatile PartiesDatabase instance;
@@ -36,7 +30,8 @@ public abstract class PartiesDatabase extends RoomDatabase {
     }
 
     private static PartiesDatabase create(final Context context) {
-        return Room.databaseBuilder(context, PartiesDatabase.class, DB_NAME).addMigrations(MIGRATION_1_2)
+        return Room.databaseBuilder(context, PartiesDatabase.class, DB_NAME)
+                //.addMigrations(MIGRATION_1_2)
                 //.allowMainThreadQueries()
                 .build();
     }
@@ -45,11 +40,11 @@ public abstract class PartiesDatabase extends RoomDatabase {
         instance = null;
     }
 
-    static final Migration MIGRATION_1_2 = new Migration(1, 2) {
+/*    static final Migration MIGRATION_1_2 = new Migration(1, 2) {
         @Override
         public void migrate(SupportSQLiteDatabase database) {
             database.execSQL("ALTER TABLE `party` add column date INTEGER");
         }
-    };
+    };*/
 
 }
