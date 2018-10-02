@@ -8,7 +8,9 @@ import android.content.Intent;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
 import android.support.v7.app.AppCompatActivity;
+import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
+import android.util.Log;
 import android.view.View;
 
 import com.partycalc.PartyRecyclerViewAdapter;
@@ -36,8 +38,10 @@ public class MainActivity extends AppCompatActivity implements View.OnLongClickL
         mRecyclerView.setHasFixedSize(true);
         adapter = new PartyRecyclerViewAdapter(new ArrayList<Party>(), this, this);
         mRecyclerView.setAdapter(adapter);
+        mRecyclerView.setLayoutManager(new LinearLayoutManager(this));
 
         mModel = ViewModelProviders.of(this).get(PartyViewModel.class);
+
         mModel.getParties().observe(this, new Observer<List<Party>>() {
             @Override
             public void onChanged(@Nullable final List<Party> p) {
@@ -55,7 +59,7 @@ public class MainActivity extends AppCompatActivity implements View.OnLongClickL
     public void onClick(View view){
         Party item = (Party) view.getTag();
         Intent intent = new Intent(this, ActivePartyActivity.class);
-        intent.putExtra("party_id", item.getId());
+        intent.putExtra("selected_party", item);
         startActivity(intent);
     }
 

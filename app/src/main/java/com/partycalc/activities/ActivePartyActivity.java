@@ -3,9 +3,11 @@ package com.partycalc.activities;
 import android.arch.lifecycle.Observer;
 import android.arch.lifecycle.ViewModelProviders;
 import android.content.Intent;
+import android.content.pm.PackageManager;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
 import android.support.v7.app.AppCompatActivity;
+import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.util.Log;
 import android.view.View;
@@ -26,7 +28,6 @@ public class ActivePartyActivity extends AppCompatActivity implements View.OnLon
     private static final String TAG = "ActivePartyActivity";
 
     private ActivePartyViewModel activePartyViewModel;
-    private PartyViewModel partyViewModel;
 
     private RecyclerView mRecyclerView;
     private PartyParticipantsRecyclerViewAdapter adapter;
@@ -36,25 +37,14 @@ public class ActivePartyActivity extends AppCompatActivity implements View.OnLon
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_participant);
 
-        Intent intent = getIntent();// Get the Intent that started this activity and extract the string
-        int party_id = intent.getIntExtra("party_id", -1);
-        Log.i(TAG, "party_id=" + party_id);
-
         mRecyclerView = findViewById(R.id.party_participants_list);
         mRecyclerView.setHasFixedSize(true);
         adapter = new PartyParticipantsRecyclerViewAdapter(new ArrayList<Participant>(), this, this);
         mRecyclerView.setAdapter(adapter);
+        mRecyclerView.setLayoutManager(new LinearLayoutManager(this));
 
-        partyViewModel = ViewModelProviders.of(this).get(PartyViewModel.class);
-        Log.i(TAG, "partyViewModel size=" + partyViewModel.getParties().getValue().size());
-        Party selectedParty;
-        try {
-            selectedParty = partyViewModel.getPartyById(party_id);
-        } catch (Exception e) {
-            e.printStackTrace();
-            return;
-        }
-        Log.i(TAG, "selectedParty party_id=" + selectedParty.getName());
+        Party selectedParty = getIntent().getParcelableExtra("selected_party");
+
         ActivePartyViewModelFactory factory = new ActivePartyViewModelFactory(getApplication(), selectedParty);
         activePartyViewModel = ViewModelProviders.of(this, factory).get(ActivePartyViewModel.class);
 
