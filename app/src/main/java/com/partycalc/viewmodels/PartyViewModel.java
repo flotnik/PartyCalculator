@@ -15,7 +15,6 @@ public class PartyViewModel extends AndroidViewModel {
     private PartyRepository partyRepository;
 
     private LiveData<List<Party>> partiesList;
-    private LiveData<List<Participant>> partyParticipantsList;
 
 
     public PartyViewModel(@NonNull Application application) {
@@ -24,7 +23,6 @@ public class PartyViewModel extends AndroidViewModel {
         partyRepository = new PartyRepository(application);
         partiesList = partyRepository.getAllParties();
     }
-
 
     public LiveData<List<Party>> getParties() {
         return partiesList;
@@ -38,15 +36,4 @@ public class PartyViewModel extends AndroidViewModel {
         partyRepository.addParty(party);
     }
 
-    public Party getPartyById(int id) throws Exception {
-        for(Party p:partiesList.getValue()){
-            if(p.getId() == id)return  p;
-        }
-        throw new Exception("Unknown party id " + id);
-    }
-
-    public LiveData<List<Participant>> getPartyParticipants(Party party) {
-        this.partyParticipantsList = partyRepository.getPartyParticipants(party);
-        return partyParticipantsList;
-    }
 }

@@ -3,6 +3,7 @@ package com.partycalc.viewmodels;
 import android.app.Application;
 import android.arch.lifecycle.LiveData;
 import android.os.AsyncTask;
+import android.util.Log;
 
 import com.partycalc.database.ActiveParties;
 import com.partycalc.database.ActivePartiesDAO;
@@ -28,33 +29,35 @@ public class PartyRepository {
         this.activePartiesDAO = db.allPartiesDAO();
     }
 
-    public LiveData<List<Party>> getAllParties(){
+    public LiveData<List<Party>> getAllParties() {
         return partyDAO.getAllParties();
     }
 
-    public void removeParty(Party party){
+    public void removeParty(Party party) {
         new deletePartyAsyncTask(partyDAO).execute(party);
     }
 
-    public LiveData<List<Participant>> getPartyParticipants(Party party){
-        return  activePartiesDAO.getParticipantsForParty(party.getId());
+    public LiveData<List<Participant>> getPartyParticipants(Party party) {
+        return activePartiesDAO.getParticipantsForParty(party.getId());
+        /*getPartyParticipantsAsyncTask t = new getPartyParticipantsAsyncTask(activePartiesDAO);
+        t.execute(party);
+        return t.getList();*/
     }
 
-    public void removeParticipantFromParty(Party party, Participant participant){
+    public void removeParticipantFromParty(Party party, Participant participant) {
         activePartiesDAO.removeParticipantFromParty(party.getId(), participant.getId());
     }
 
-    public void addParticipantToParty(Party party, Participant participant){
-        ActiveParties rr = new ActiveParties(party.getId(), participant.getId(), "empty", 0);
-        activePartiesDAO.insert(rr);
+    public void addParticipantToParty(Party party, Participant participant) {
+         new addParticipantToPartyAsyncTask(activePartiesDAO, party).execute(participant);
     }
 
-    public void addContribToParticipant(Party party, Participant participant, Contribution contrib){
+    public void addContribToParticipant(Party party, Participant participant, Contribution contrib) {
         ActiveParties rr = new ActiveParties(party.getId(), participant.getId(), contrib.getContrib_comment(), contrib.getContrib_amount());
         activePartiesDAO.insert(rr);
     }
 
-    public  LiveData<List<Contribution>> getParticipantContributions(Party party, Participant participant){
+    public LiveData<List<Contribution>> getParticipantContributions(Party party, Participant participant) {
         return null;
     }
 
@@ -65,16 +68,20 @@ public class PartyRepository {
     //=============ASYNC  TASKS=============================
     private static class getPartyParticipantsAsyncTask extends android.os.AsyncTask<Party, Void, Void> {
 
-        private PartiesDatabase db;
+        private ActivePartiesDAO activePartiesDAO;
         LiveData<List<Participant>> list;
 
-        getPartyParticipantsAsyncTask(PartiesDatabase appDatabase) {
-            db = appDatabase;
+        public LiveData<List<Participant>> getList() {
+            return list;
+        }
+
+        getPartyParticipantsAsyncTask(ActivePartiesDAO activePartiesDAO) {
+            this.activePartiesDAO = activePartiesDAO;
         }
 
         @Override
         protected Void doInBackground(final Party... params) {
-            LiveData<List<Participant>> list = db.allPartiesDAO().getParticipantsForParty(params[0].getId());
+            list = activePartiesDAO.getParticipantsForParty(params[0].getId());
             return null;
         }
     }
@@ -82,7 +89,9 @@ public class PartyRepository {
     private static class addPartyAsyncTask extends AsyncTask<Party, Void, Void> {
         private PartyDAO partyDAO;
 
-        addPartyAsyncTask(PartyDAO partyDAO) {this.partyDAO = partyDAO;}
+        addPartyAsyncTask(PartyDAO partyDAO) {
+            this.partyDAO = partyDAO;
+        }
 
         @Override
         protected Void doInBackground(final Party... params) {
@@ -95,7 +104,9 @@ public class PartyRepository {
 
         private PartyDAO partyDAO;
 
-        deletePartyAsyncTask(PartyDAO partyDAO) {this.partyDAO = partyDAO;}
+        deletePartyAsyncTask(PartyDAO partyDAO) {
+            this.partyDAO = partyDAO;
+        }
 
         @Override
         protected Void doInBackground(final Party... params) {
@@ -129,8 +140,9 @@ public class PartyRepository {
 
         @Override
         protected Void doInBackground(final Participant... params) {
-            ActiveParties allp = new ActiveParties(party.getId(), params[0].getId(), "", 0);
-            activePartiesDAO.insert(allp);
+            ActiveParties ap = new ActiveParties(party.getId(), params[0].getId(), "empty", 0);
+            long[] ids= activePartiesDAO.insert(ap);
+            Log.e("PartyRepository", "inserted object id = " + ids[0]);
             return null;
         }
     }

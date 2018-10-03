@@ -1,6 +1,7 @@
 package com.partycalc.activities;
 
 import android.arch.lifecycle.ViewModelProviders;
+import android.content.Intent;
 import android.os.Bundle;
 import android.support.v7.app.AppCompatActivity;
 import android.view.View;
@@ -17,8 +18,6 @@ public class AddParticipantToPartyActivity extends AppCompatActivity {
     private EditText participantName;
     private Button submit;
 
-    ActivePartyViewModel activePartyViewModel;
-
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -27,15 +26,16 @@ public class AddParticipantToPartyActivity extends AppCompatActivity {
         participantName = findViewById(R.id.participantName);
         submit = findViewById(R.id.submitAddParticipantBtn);
 
-        activePartyViewModel = ViewModelProviders.of(this).get(ActivePartyViewModel.class);
-
         submit.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
                 if (participantName.getText() == null){
                     Toast.makeText(AddParticipantToPartyActivity.this, R.string.party_name_is_incorrect, Toast.LENGTH_SHORT).show();
                 }else {
-                    activePartyViewModel.addParticipantToParty(new Participant("", 1));
+                    Participant added_participant = new Participant(participantName.getText().toString(), 1);
+                    Intent intent = new Intent();
+                    intent.putExtra("added_participant", added_participant);
+                    setResult(2, intent);
                     finish();
                 }
             }

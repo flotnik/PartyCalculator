@@ -13,7 +13,7 @@ import java.util.List;
 public interface ActivePartiesDAO {
 
     @Insert
-    void insert(ActiveParties... item);
+    long[] insert(ActiveParties... item);
 
     @Update
     void update(ActiveParties... item);
@@ -21,8 +21,8 @@ public interface ActivePartiesDAO {
     @Delete
     void delete(ActiveParties... item);
 
-    @Query("SELECT participant.* from ActiveParties " +
-            "INNER JOIN participant ON participant.id=ActiveParties.participantId " +
+    @Query("SELECT participant.* from activeparties " +
+            "LEFT JOIN participant ON participant.id=activeparties.participantId " +
             "where partyId=:partyId")
     LiveData<List<Participant>> getParticipantsForParty(final int partyId);
 

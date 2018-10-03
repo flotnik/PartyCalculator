@@ -18,7 +18,7 @@
 
         <activity android:name=".activities.ActivePartyActivity">
             <intent-filter>
-                <action android:name="com.partycalc.ParticipantActivity" />
+                <action android:name="com.partycalc.ActivePartyActivity" />
                 <category android:name="android.intent.category.DEFAULT" />
             </intent-filter>
 

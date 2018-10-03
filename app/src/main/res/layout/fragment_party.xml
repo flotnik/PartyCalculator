@@ -1,14 +1,11 @@
 <?xml version="1.0" encoding="utf-8"?>
 <android.support.constraint.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
-    android:id="@+id/linearLayout"
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
     android:orientation="horizontal"
     android:paddingLeft="16dp"
     android:paddingRight="16dp">
-    <!--tools:layout_editor_absoluteY="25dp"-->
-
 
     <TextView
         android:id="@+id/party_date"
@@ -18,7 +15,6 @@
         android:layout_marginTop="5dp"
         android:layout_marginBottom="5dp"
         android:clickable="true"
-        android:editable="false"
         android:labelFor="@+id/party_name"
         android:text="TextView"
         android:textAlignment="viewStart"

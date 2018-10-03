@@ -51,9 +51,27 @@ public class ActivePartyActivity extends AppCompatActivity implements View.OnLon
         activePartyViewModel.getAllParticipants().observe(this, new Observer<List<Participant>>() {
             @Override
             public void onChanged(@Nullable final List<Participant> p) {
+                Log.e(TAG, "AllParticipants was changed " + p.size());
                 adapter.addItems(p);
             }
         });
+    }
+
+    public void addParticipantButtonClick(View view){
+        Intent intent = new Intent(this, AddParticipantToPartyActivity.class);
+        startActivityForResult(intent, 2);
+    }
+
+    @Override
+    protected void onActivityResult(int requestCode, int resultCode, Intent data) {
+        super.onActivityResult(requestCode, resultCode, data);
+
+        //Log.e(TAG, "resultCode = " + resultCode);
+        //Log.e(TAG, "requestCode = " + requestCode);
+        //if(requestCode == 2){
+        Participant added_participant = data.getParcelableExtra("added_participant");
+        activePartyViewModel.addParticipantToParty(added_participant);
+        //}
     }
 
     @Override

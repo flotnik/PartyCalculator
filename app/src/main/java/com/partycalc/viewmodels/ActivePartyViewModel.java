@@ -4,6 +4,7 @@ import android.app.Application;
 import android.arch.lifecycle.AndroidViewModel;
 import android.arch.lifecycle.LiveData;
 import android.support.annotation.NonNull;
+import android.util.Log;
 
 import com.partycalc.database.Contribution;
 import com.partycalc.database.Participant;
@@ -20,8 +21,9 @@ public class ActivePartyViewModel extends AndroidViewModel {
     public ActivePartyViewModel(@NonNull Application application, Party party) {
         super(application);
         this.party = party;
+        Log.e("ActivePartyViewModel", "party id = " + party.getId());
         partyRepository = new PartyRepository(application);
-        this.participantsList = partyRepository.getPartyParticipants(party);
+        participantsList = partyRepository.getPartyParticipants(party);
     }
 
     public LiveData<List<Contribution>> getContributions(Participant participant){

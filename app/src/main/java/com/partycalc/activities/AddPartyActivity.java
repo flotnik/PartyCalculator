@@ -2,8 +2,10 @@ package com.partycalc.activities;
 
 import android.app.DatePickerDialog;
 import android.arch.lifecycle.ViewModelProviders;
+import android.content.Intent;
 import android.os.Bundle;
 import android.support.v7.app.AppCompatActivity;
+import android.util.Log;
 import android.view.View;
 import android.widget.Button;
 import android.widget.DatePicker;
@@ -18,7 +20,7 @@ import java.text.SimpleDateFormat;
 import java.util.Calendar;
 import java.util.Date;
 
-public class AddPartyActivity extends AppCompatActivity implements DatePickerDialog.OnDateSetListener  {
+public class AddPartyActivity extends AppCompatActivity implements DatePickerDialog.OnDateSetListener {
 
     private static final String TAG = "AddPartyActivity";
 
@@ -29,8 +31,6 @@ public class AddPartyActivity extends AppCompatActivity implements DatePickerDia
     private EditText partyName;
     private EditText partyDate;
     private Button submit;
-
-    private PartyViewModel partyViewModel;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -44,17 +44,19 @@ public class AddPartyActivity extends AppCompatActivity implements DatePickerDia
         calendar = Calendar.getInstance();
         datePickerDialog = new DatePickerDialog(this, AddPartyActivity.this, calendar.get(Calendar.YEAR), calendar.get(Calendar.MONTH), calendar.get(Calendar.DAY_OF_MONTH));
 
-        partyViewModel = ViewModelProviders.of(this).get(PartyViewModel.class);
-
         submit.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                if (partyName.getText() == null){
+                if (partyName.getText() == null) {
                     Toast.makeText(AddPartyActivity.this, R.string.party_name_is_incorrect, Toast.LENGTH_SHORT).show();
-                }else if(date == null){
+                } else if (date == null) {
                     Toast.makeText(AddPartyActivity.this, R.string.party_date_is_incorrect, Toast.LENGTH_SHORT).show();
-                }else {
-                    partyViewModel.addParty(new Party(partyName.getText().toString(),date));
+                } else {
+                    Party added_party = new Party(partyName.getText().toString(), date);
+                    Intent intent = new Intent();
+                    intent.putExtra("added_party", added_party);
+                    Log.e(TAG, "TROLOLO");
+                    setResult(2, intent);
                     finish();
                 }
             }

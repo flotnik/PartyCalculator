@@ -5,6 +5,7 @@ import android.arch.lifecycle.Observer;
 import android.arch.lifecycle.ViewModelProviders;
 import android.content.DialogInterface;
 import android.content.Intent;
+import android.nfc.Tag;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
 import android.support.v7.app.AppCompatActivity;
@@ -25,7 +26,7 @@ public class MainActivity extends AppCompatActivity implements View.OnLongClickL
 
     private static final String TAG = "MainActivity";
 
-    private PartyViewModel mModel;
+    private PartyViewModel partyViewModel;
     private RecyclerView mRecyclerView;
     private PartyRecyclerViewAdapter adapter;
 
@@ -40,9 +41,10 @@ public class MainActivity extends AppCompatActivity implements View.OnLongClickL
         mRecyclerView.setAdapter(adapter);
         mRecyclerView.setLayoutManager(new LinearLayoutManager(this));
 
-        mModel = ViewModelProviders.of(this).get(PartyViewModel.class);
+        partyViewModel = ViewModelProviders.of(this).get(PartyViewModel.class);
+        //Log.e(TAG, "partyViewModel = " + partyViewModel.toString());
 
-        mModel.getParties().observe(this, new Observer<List<Party>>() {
+        partyViewModel.getParties().observe(this, new Observer<List<Party>>() {
             @Override
             public void onChanged(@Nullable final List<Party> p) {
                 adapter.addItems(p);
@@ -52,7 +54,19 @@ public class MainActivity extends AppCompatActivity implements View.OnLongClickL
 
     public void addPartyButtonClick(View view){
         Intent intent = new Intent(this, AddPartyActivity.class);
-        startActivity(intent);
+        startActivityForResult(intent, 2);
+    }
+
+    @Override
+    protected void onActivityResult(int requestCode, int resultCode, Intent data) {
+        super.onActivityResult(requestCode, resultCode, data);
+
+        //Log.e(TAG, "resultCode = " + resultCode);
+        //Log.e(TAG, "requestCode = " + requestCode);
+        //if(requestCode == 2){
+            Party added_party = data.getParcelableExtra("added_party");
+            partyViewModel.addParty(added_party);
+        //}
     }
 
     @Override
@@ -70,7 +84,7 @@ public class MainActivity extends AppCompatActivity implements View.OnLongClickL
         builder.setPositiveButton(R.string.ok, new DialogInterface.OnClickListener() {
             public void onClick(DialogInterface dialog, int id) {
                 Party borrowModel = (Party) view.getTag();
-                mModel.deleteParty(borrowModel);
+                partyViewModel.deleteParty(borrowModel);
             }
         });
         builder.setNegativeButton(R.string.cancel, new DialogInterface.OnClickListener() {
