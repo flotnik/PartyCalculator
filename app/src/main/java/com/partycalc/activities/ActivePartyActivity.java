@@ -3,7 +3,6 @@ package com.partycalc.activities;
 import android.arch.lifecycle.Observer;
 import android.arch.lifecycle.ViewModelProviders;
 import android.content.Intent;
-import android.content.pm.PackageManager;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
 import android.support.v7.app.AppCompatActivity;
@@ -18,7 +17,6 @@ import com.partycalc.database.Participant;
 import com.partycalc.database.Party;
 import com.partycalc.viewmodels.ActivePartyViewModel;
 import com.partycalc.viewmodels.ActivePartyViewModelFactory;
-import com.partycalc.viewmodels.PartyViewModel;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -35,13 +33,13 @@ public class ActivePartyActivity extends AppCompatActivity implements View.OnLon
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_participant);
+        setContentView(R.layout.activity_active_party);
 
         mRecyclerView = findViewById(R.id.party_participants_list);
         mRecyclerView.setHasFixedSize(true);
+        mRecyclerView.setLayoutManager(new LinearLayoutManager(this));
         adapter = new PartyParticipantsRecyclerViewAdapter(new ArrayList<Participant>(), this, this);
         mRecyclerView.setAdapter(adapter);
-        mRecyclerView.setLayoutManager(new LinearLayoutManager(this));
 
         Party selectedParty = getIntent().getParcelableExtra("selected_party");
 

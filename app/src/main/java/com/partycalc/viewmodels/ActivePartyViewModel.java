@@ -26,15 +26,15 @@ public class ActivePartyViewModel extends AndroidViewModel {
         participantsList = partyRepository.getPartyParticipants(party);
     }
 
-    public LiveData<List<Contribution>> getContributions(Participant participant){
-       return partyRepository.getParticipantContributions(party, participant);
-    }
-
     public LiveData<List<Participant>> getAllParticipants() {
         return participantsList;
     }
 
     public void addParticipantToParty(Participant p) {
        partyRepository.addParticipantToParty(party, p);
+    }
+
+    public LiveData<List<Contribution>> getContributions(Participant participant){
+        return partyRepository.getParticipantContributions(party, participant);
     }
 }

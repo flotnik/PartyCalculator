@@ -5,13 +5,11 @@ import android.arch.lifecycle.Observer;
 import android.arch.lifecycle.ViewModelProviders;
 import android.content.DialogInterface;
 import android.content.Intent;
-import android.nfc.Tag;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
-import android.util.Log;
 import android.view.View;
 
 import com.partycalc.PartyRecyclerViewAdapter;
@@ -37,9 +35,9 @@ public class MainActivity extends AppCompatActivity implements View.OnLongClickL
 
         mRecyclerView = findViewById(R.id.parties_list);
         mRecyclerView.setHasFixedSize(true);
+        mRecyclerView.setLayoutManager(new LinearLayoutManager(this));
         adapter = new PartyRecyclerViewAdapter(new ArrayList<Party>(), this, this);
         mRecyclerView.setAdapter(adapter);
-        mRecyclerView.setLayoutManager(new LinearLayoutManager(this));
 
         partyViewModel = ViewModelProviders.of(this).get(PartyViewModel.class);
         //Log.e(TAG, "partyViewModel = " + partyViewModel.toString());

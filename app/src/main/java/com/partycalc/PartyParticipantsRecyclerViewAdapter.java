@@ -31,7 +31,7 @@ public class PartyParticipantsRecyclerViewAdapter extends RecyclerView.Adapter<P
 
     @Override
     public ViewHolder onCreateViewHolder(ViewGroup parent, int viewType) {
-        View view = LayoutInflater.from(parent.getContext()).inflate(R.layout.fragment_party_participants, parent, false);
+        View view = LayoutInflater.from(parent.getContext()).inflate(R.layout.party_participants_list_item, parent, false);
         return new ViewHolder(view);
     }
 
@@ -39,21 +39,11 @@ public class PartyParticipantsRecyclerViewAdapter extends RecyclerView.Adapter<P
     public void onBindViewHolder(final ViewHolder holder, int position) {
         Participant borrowModel = mValues.get(position);
         holder.mItem = mValues.get(position);
+        Log.e("adapter", "trololo = " + mValues.get(position).getName());
         holder.nameView.setText(mValues.get(position).getName());
         holder.itemView.setTag(borrowModel);
         holder.itemView.setOnClickListener(onClickListener);
         holder.itemView.setOnLongClickListener(longClickListener);
-
-       /* holder.mView.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                if (null != mListener) {
-                    // Notify the active callbacks interface (the activity, if the
-                    // fragment is attached to one) that an item has been selected.
-                    mListener.onListFragmentInteraction(holder.mItem);
-                }
-            }
-        });*/
     }
 
     @Override
@@ -62,7 +52,6 @@ public class PartyParticipantsRecyclerViewAdapter extends RecyclerView.Adapter<P
     }
 
     public void addItems(List<Participant> items){
-        Log.e("addItems", "addItems " + items.size());
         this.mValues = items;
         notifyDataSetChanged();
     }
@@ -74,6 +63,7 @@ public class PartyParticipantsRecyclerViewAdapter extends RecyclerView.Adapter<P
 
         public ViewHolder(View view) {
             super(view);
+
             mView = view;
             nameView = view.findViewById(R.id.participant_name);
         }

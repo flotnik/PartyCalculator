@@ -21,7 +21,7 @@ public interface ActivePartiesDAO {
     @Delete
     void delete(ActiveParties... item);
 
-    @Query("SELECT participant.* from activeparties " +
+    @Query("SELECT * from activeparties " +
             "LEFT JOIN participant ON participant.id=activeparties.participantId " +
             "where partyId=:partyId")
     LiveData<List<Participant>> getParticipantsForParty(final int partyId);

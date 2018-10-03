@@ -17,7 +17,7 @@ public abstract class PartiesDatabase extends RoomDatabase {
 
     public abstract PartyDAO partyDAO();
     public abstract ParticipantDAO participantDAO();
-    public abstract ActivePartiesDAO allPartiesDAO();
+    public abstract ActivePartiesDAO activePartiesDAO();
 
     private static final String DB_NAME = "partyCalcDatabase.db";
     private static volatile PartiesDatabase instance;
