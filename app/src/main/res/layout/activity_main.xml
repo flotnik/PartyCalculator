@@ -6,17 +6,25 @@
     android:layout_height="match_parent"
     tools:context=".activities.MainActivity">
 
+    <android.support.v7.widget.Toolbar
+        android:id="@+id/toolbar"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:background="?attr/colorPrimary"
+        android:minHeight="?attr/actionBarSize"
+        android:theme="?attr/actionBarTheme" />
+
     <android.support.v7.widget.RecyclerView
         android:id="@+id/parties_list"
         android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
+        android:layout_height="102dp"
         android:layout_marginStart="16dp"
-        android:layout_marginTop="16dp"
+        android:layout_marginTop="10dp"
         android:layout_marginEnd="16dp"
         app:layoutManager="android.support.v7.widget.LinearLayoutManager"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent" />
+        app:layout_constraintTop_toBottomOf="@+id/toolbar" />
 
     <android.support.design.widget.FloatingActionButton
         android:id="@+id/addPartyFab"

@@ -1,7 +1,6 @@
 package com.partycalc;
 
 import android.support.v7.widget.RecyclerView;
-import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -39,8 +38,11 @@ public class PartyParticipantsRecyclerViewAdapter extends RecyclerView.Adapter<P
     public void onBindViewHolder(final ViewHolder holder, int position) {
         Participant borrowModel = mValues.get(position);
         holder.mItem = mValues.get(position);
-        Log.e("adapter", "trololo = " + mValues.get(position).getName());
-        holder.nameView.setText(mValues.get(position).getName());
+        String item_text = mValues.get(position).getName();
+        if (mValues.get(position).getSize() > 1) {
+            item_text += " (" + mValues.get(position).getSize() + ")";
+        }
+        holder.nameView.setText(item_text);
         holder.itemView.setTag(borrowModel);
         holder.itemView.setOnClickListener(onClickListener);
         holder.itemView.setOnLongClickListener(longClickListener);
@@ -51,7 +53,7 @@ public class PartyParticipantsRecyclerViewAdapter extends RecyclerView.Adapter<P
         return mValues.size();
     }
 
-    public void addItems(List<Participant> items){
+    public void addItems(List<Participant> items) {
         this.mValues = items;
         notifyDataSetChanged();
     }

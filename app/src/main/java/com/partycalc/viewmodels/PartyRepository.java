@@ -3,7 +3,6 @@ package com.partycalc.viewmodels;
 import android.app.Application;
 import android.arch.lifecycle.LiveData;
 import android.os.AsyncTask;
-import android.util.Log;
 
 import com.partycalc.database.ActiveParties;
 import com.partycalc.database.ActivePartiesDAO;
@@ -38,7 +37,7 @@ public class PartyRepository {
     }
 
     public LiveData<List<Participant>> getPartyParticipants(Party party) {
-        Log.e("getPartyParticipants", "party_id = " + party.getName());
+        //Log.e("getPartyParticipants", "party_id = " + party.getName());
         return activePartiesDAO.getParticipantsForParty(party.getId());
         /*getPartyParticipantsAsyncTask t = new getPartyParticipantsAsyncTask(activePartiesDAO);
         t.execute(party);

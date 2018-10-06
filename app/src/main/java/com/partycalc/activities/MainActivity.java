@@ -10,7 +10,12 @@ import android.support.annotation.Nullable;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
+import android.support.v7.widget.Toolbar;
+import android.view.Menu;
+import android.view.MenuInflater;
+import android.view.MenuItem;
 import android.view.View;
+import android.widget.Toast;
 
 import com.partycalc.PartyRecyclerViewAdapter;
 import com.partycalc.R;
@@ -33,6 +38,9 @@ public class MainActivity extends AppCompatActivity implements View.OnLongClickL
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
 
+        Toolbar myToolbar = findViewById(R.id.toolbar);
+        setSupportActionBar(myToolbar);
+
         mRecyclerView = findViewById(R.id.parties_list);
         mRecyclerView.setHasFixedSize(true);
         mRecyclerView.setLayoutManager(new LinearLayoutManager(this));
@@ -50,6 +58,25 @@ public class MainActivity extends AppCompatActivity implements View.OnLongClickL
         });
     }
 
+    @Override
+    public boolean onCreateOptionsMenu(Menu menu) {
+        MenuInflater inflater = getMenuInflater();
+        inflater.inflate(R.menu.main_menu, menu);
+        return true;
+    }
+
+    @Override
+    public boolean onOptionsItemSelected(MenuItem item) {
+        switch (item.getItemId()) {
+            case R.id.item_participants:
+                Toast.makeText(MainActivity.this, "Participants item selected", Toast.LENGTH_SHORT).show();
+                return true;
+            default:
+                Toast.makeText(MainActivity.this, "DEFAULT", Toast.LENGTH_SHORT).show();
+                return super.onOptionsItemSelected(item);
+        }
+    }
+
     public void addPartyButtonClick(View view){
         Intent intent = new Intent(this, AddPartyActivity.class);
         startActivityForResult(intent, 2);
@@ -59,12 +86,10 @@ public class MainActivity extends AppCompatActivity implements View.OnLongClickL
     protected void onActivityResult(int requestCode, int resultCode, Intent data) {
         super.onActivityResult(requestCode, resultCode, data);
 
-        //Log.e(TAG, "resultCode = " + resultCode);
-        //Log.e(TAG, "requestCode = " + requestCode);
-        //if(requestCode == 2){
+        if(requestCode == 2 && resultCode != 0){
             Party added_party = data.getParcelableExtra("added_party");
             partyViewModel.addParty(added_party);
-        //}
+        }
     }
 
     @Override
