@@ -9,5 +9,4 @@
     <string name="party_name_is_incorrect">Некорректное название для вечеринки</string>
     <string name="party_date_is_incorrect">Некорректная дата вечеринки</string>
     <string name="participant_name">Имя участника</string>
-    <string name="participant_number_is_incorrect">Must be bigger than 0</string>
 </resources>

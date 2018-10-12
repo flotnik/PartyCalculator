@@ -52,9 +52,8 @@ public class PartyRepository {
          new addParticipantToPartyAsyncTask(activePartiesDAO, participantDAO, party).execute(participant);
     }
 
-    public void addContribToParticipant(Party party, Participant participant, Contribution contrib) {
-        ActiveParties rr = new ActiveParties(party.getId(), participant.getId(), contrib.getContrib_comment(), contrib.getContrib_amount());
-        activePartiesDAO.insert(rr);
+    public void addContribToParticipant(Party party, Participant participant, Contribution[] contrib) {
+        new addParticipantContributionAsyncTask(activePartiesDAO, party, participant).execute(contrib);
     }
 
     public LiveData<List<Contribution>> getParticipantContributions(Party party, Participant participant) {
@@ -148,6 +147,31 @@ public class PartyRepository {
             long[] ids = participantDAO.insert(params[0]);
             ActiveParties ap = new ActiveParties(party.getId(), (int)ids[0], "empty", 0);
             activePartiesDAO.insert(ap);
+            return null;
+        }
+    }
+
+    private static class addParticipantContributionAsyncTask extends AsyncTask<Contribution, Void, Void> {
+        private ActivePartiesDAO activePartiesDAO;
+        private Party party;
+        private Participant participant;
+
+        public addParticipantContributionAsyncTask(ActivePartiesDAO activePartiesDAO,Party party, Participant participant) {
+            this.activePartiesDAO = activePartiesDAO;
+            this.participant = participant;
+            this.party = party;
+        }
+
+        @Override
+        protected Void doInBackground(final Contribution... params) {
+            for(Contribution c: params){
+                activePartiesDAO.insert(
+                        new ActiveParties(party.getId(),
+                                          participant.getId(),
+                                          c.getContrib_comment(),
+                                          c.getContrib_amount())
+                );
+            }
             return null;
         }
     }

@@ -9,5 +9,4 @@
     <string name="party_name_is_incorrect">Incorrect party name</string>
     <string name="party_date_is_incorrect">Incorrect party date</string>
     <string name="participant_name">Participant name</string>
-    <string name="participant_number_is_incorrect">Must be bigger than 0</string>
 </resources>

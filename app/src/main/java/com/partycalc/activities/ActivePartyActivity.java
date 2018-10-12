@@ -18,6 +18,7 @@ import android.widget.Toast;
 
 import com.partycalc.PartyParticipantsRecyclerViewAdapter;
 import com.partycalc.R;
+import com.partycalc.database.Contribution;
 import com.partycalc.database.Participant;
 import com.partycalc.database.Party;
 import com.partycalc.viewmodels.ActivePartyViewModel;
@@ -78,7 +79,6 @@ public class ActivePartyActivity extends AppCompatActivity implements View.OnLon
                 Toast.makeText(this, "Calculate item selected", Toast.LENGTH_SHORT).show();
                 return true;
             default:
-                Toast.makeText(this, "DEFAULT", Toast.LENGTH_SHORT).show();
                 return super.onOptionsItemSelected(item);
         }
     }
@@ -94,6 +94,7 @@ public class ActivePartyActivity extends AppCompatActivity implements View.OnLon
 
         if (requestCode == 2 && resultCode != 0) {
             Participant added_participant = data.getParcelableExtra("added_participant");
+            Contribution[] contributions = (Contribution[]) data.getParcelableArrayExtra("contributions");
             activePartyViewModel.addParticipantToParty(added_participant);
         }
     }

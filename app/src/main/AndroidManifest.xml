@@ -12,12 +12,14 @@
         <activity android:name=".activities.MainActivity">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
+
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
         </activity>
         <activity android:name=".activities.ActivePartyActivity">
             <intent-filter>
                 <action android:name="com.partycalc.ActivePartyActivity" />
+
                 <category android:name="android.intent.category.DEFAULT" />
             </intent-filter>
 
@@ -28,6 +30,7 @@
         <activity android:name=".activities.AddPartyActivity">
             <intent-filter>
                 <action android:name="com.partycalc.AddPartyActivity" />
+
                 <category android:name="android.intent.category.DEFAULT" />
             </intent-filter>
 
@@ -38,6 +41,7 @@
         <activity android:name=".activities.AddParticipantToPartyActivity">
             <intent-filter>
                 <action android:name="com.partycalc.AddParticipantToPartyActivity" />
+
                 <category android:name="android.intent.category.DEFAULT" />
             </intent-filter>
 
@@ -49,6 +53,7 @@
         <meta-data
             android:name="com.google.android.actions"
             android:resource="@xml/actions" />
+
     </application>
 
 </manifest>
