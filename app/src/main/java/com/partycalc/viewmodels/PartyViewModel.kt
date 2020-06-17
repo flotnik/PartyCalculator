@@ -1,6 +1,7 @@
 package com.partycalc.viewmodels
 
 import android.app.Application
+import android.util.Log
 import androidx.lifecycle.AndroidViewModel
 import androidx.lifecycle.LiveData
 import com.partycalc.database.PartiesDatabase
@@ -18,7 +19,12 @@ class PartyViewModel(application: Application) : AndroidViewModel(application) {
         partyRepository.addParty(party)
     }
 
+    override fun onCleared() {
+        super.onCleared()
+        Log.i("PartyViewModel", "PartyViewModel destroyed!")
+    }
+
     init {
-        parties = partyRepository.partyDAO.allParties
+        parties = partyRepository.getAllParties()
     }
 }

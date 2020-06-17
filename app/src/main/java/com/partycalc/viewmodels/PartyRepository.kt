@@ -5,34 +5,30 @@ import androidx.lifecycle.LiveData
 import com.partycalc.database.*
 
 class PartyRepository(db: PartiesDatabase) {
-    var partyDAO: PartyDAO = db.partyDAO()
-    var participantDAO: ParticipantDAO = db.participantDAO()
-    var activePartiesDAO: ActivePartiesDAO = db.activePartiesDAO()
-    //val allParties: LiveData<List<Party>>
-    //get() = partyDAO.allParties
+    private var db: PartiesDatabase = db
 
     fun removeParty(party: Party) {
-        DeletePartyAsyncTask(partyDAO).execute(party)
+        DeletePartyAsyncTask(db.partyDAO()).execute(party)
     }
 
     fun getPartyParticipants(party: Party): LiveData<List<Participant>> {
         //Log.e("getPartyParticipants", "party_id = " + party.getName());
-        return activePartiesDAO.getParticipantsForParty(party.id)
+        return db.activePartiesDAO().getParticipantsForParty(party.id)
         /*getPartyParticipantsAsyncTask t = new getPartyParticipantsAsyncTask(activePartiesDAO);
         t.execute(party);
         return t.getList();*/
     }
 
     fun removeParticipantFromParty(party: Party, participant: Participant) {
-        activePartiesDAO.removeParticipantFromParty(party.id, participant.id)
+        db.activePartiesDAO().removeParticipantFromParty(party.id, participant.id)
     }
 
     fun addParticipantToParty(party: Party, participant: Participant?) {
-        AddParticipantToPartyAsyncTask(activePartiesDAO, participantDAO, party).execute(participant)
+        AddParticipantToPartyAsyncTask(db.activePartiesDAO(), db.participantDAO(), party).execute(participant)
     }
 
     fun addContribToParticipant(party: Party, participant: Participant, contrib: Array<Contribution?>) {
-        AddParticipantContributionAsyncTask(activePartiesDAO, party, participant).execute(*contrib)
+        AddParticipantContributionAsyncTask(db.activePartiesDAO(), party, participant).execute(*contrib)
     }
 
     fun getParticipantContributions(party: Party?, participant: Participant?): LiveData<List<Contribution>>? {
@@ -40,7 +36,11 @@ class PartyRepository(db: PartiesDatabase) {
     }
 
     fun addParty(party: Party) {
-        AddPartyAsyncTask(partyDAO).execute(party)
+        AddPartyAsyncTask(db.partyDAO()).execute(party)
+    }
+
+    fun getAllParties(): LiveData<List<Party>> {
+        return db.partyDAO().allParties
     }
 
     //=============ASYNC  TASKS=============================

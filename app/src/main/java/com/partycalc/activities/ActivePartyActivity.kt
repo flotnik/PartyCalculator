@@ -11,7 +11,8 @@ import android.widget.Toast
 import androidx.appcompat.app.AppCompatActivity
 import androidx.appcompat.widget.Toolbar
 import androidx.lifecycle.Observer
-import androidx.lifecycle.ViewModelProviders
+import androidx.lifecycle.ViewModelProvider
+import androidx.recyclerview.widget.LinearLayoutManager
 import com.partycalc.PartyParticipantsRecyclerViewAdapter
 import com.partycalc.R
 import com.partycalc.database.Contribution
@@ -22,9 +23,15 @@ import com.partycalc.viewmodels.ActivePartyViewModelFactory
 import java.util.*
 
 class ActivePartyActivity : AppCompatActivity(), OnLongClickListener, View.OnClickListener {
-    private var activePartyViewModel: ActivePartyViewModel? = null
+
+    companion object {
+        private const val TAG = "ActivePartyActivity"
+    }
+
+    private lateinit var activePartyViewModel: ActivePartyViewModel
     private lateinit var mRecyclerView: androidx.recyclerview.widget.RecyclerView
     private var adapter: PartyParticipantsRecyclerViewAdapter? = null
+
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_active_party)
@@ -33,15 +40,15 @@ class ActivePartyActivity : AppCompatActivity(), OnLongClickListener, View.OnCli
         supportActionBar!!.setDisplayHomeAsUpEnabled(true)
         mRecyclerView = findViewById(R.id.party_participants_list)
         mRecyclerView.setHasFixedSize(true)
-        mRecyclerView.setLayoutManager(androidx.recyclerview.widget.LinearLayoutManager(this))
+        mRecyclerView.layoutManager = LinearLayoutManager(this)
         adapter = PartyParticipantsRecyclerViewAdapter(ArrayList(), this, this)
-        mRecyclerView.setAdapter(adapter)
+        mRecyclerView.adapter = adapter
         val selectedParty: Party = intent.getParcelableExtra("selected_party")
         val factory = ActivePartyViewModelFactory(application, selectedParty)
-        activePartyViewModel = ViewModelProviders.of(this, factory).get(ActivePartyViewModel::class.java)
-        activePartyViewModel!!.allParticipants?.observe(this, Observer { p ->
+        activePartyViewModel = ViewModelProvider(this, factory).get(ActivePartyViewModel::class.java)
+        activePartyViewModel.allParticipants.observe(this, Observer { p ->
             Log.e(TAG, "AllParticipants was changed " + p!!.size)
-            adapter!!.addItems(p as List<Participant>)
+            adapter!!.addItems(p)
         })
     }
 
@@ -71,16 +78,13 @@ class ActivePartyActivity : AppCompatActivity(), OnLongClickListener, View.OnCli
         if (requestCode == 2 && resultCode != 0) {
             val addedParticipant: Participant = data!!.getParcelableExtra("added_participant")
             val contributions = data.getParcelableArrayExtra("contributions") as Array<Contribution>
-            activePartyViewModel!!.addParticipantToParty(addedParticipant)
+            activePartyViewModel.addParticipantToParty(addedParticipant)
         }
     }
 
     override fun onClick(view: View) {}
+
     override fun onLongClick(view: View): Boolean {
         return false
-    }
-
-    companion object {
-        private const val TAG = "ActivePartyActivity"
     }
 }

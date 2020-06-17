@@ -12,6 +12,7 @@ import androidx.appcompat.app.AppCompatActivity
 import androidx.appcompat.widget.Toolbar
 import androidx.lifecycle.Observer
 import androidx.lifecycle.ViewModelProvider
+import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
 import com.partycalc.PartyRecyclerViewAdapter
 import com.partycalc.R
@@ -21,6 +22,11 @@ import java.util.*
 
 
 class MainActivity : AppCompatActivity(), OnLongClickListener, View.OnClickListener {
+
+    companion object {
+        private const val TAG = "MainActivity"
+    }
+
     private lateinit var partyViewModel: PartyViewModel
     private lateinit var mRecyclerView: RecyclerView
     private lateinit var adapter: PartyRecyclerViewAdapter
@@ -32,7 +38,7 @@ class MainActivity : AppCompatActivity(), OnLongClickListener, View.OnClickListe
         setSupportActionBar(myToolbar)
         mRecyclerView = findViewById(R.id.parties_list)
         mRecyclerView.setHasFixedSize(true)
-        mRecyclerView.layoutManager = androidx.recyclerview.widget.LinearLayoutManager(this)
+        mRecyclerView.layoutManager = LinearLayoutManager(this)
         adapter = PartyRecyclerViewAdapter(ArrayList(), this, this)
         mRecyclerView.adapter = adapter
         partyViewModel = ViewModelProvider(this).get(PartyViewModel::class.java)
@@ -89,9 +95,5 @@ class MainActivity : AppCompatActivity(), OnLongClickListener, View.OnClickListe
         builder.setNegativeButton(R.string.cancel) { dialog, id -> dialog.cancel() }
         builder.create().show()
         return false
-    }
-
-    companion object {
-        private const val TAG = "MainActivity"
     }
 }
