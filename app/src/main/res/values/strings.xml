@@ -1,0 +1,4 @@
+<resources>
+    <string name="app_name">PartyCalculator</string>
+    <string name="title_activity_party">PartyActivity</string>
+</resources>
